@@ -36,6 +36,32 @@
       window.addEventListener('resize', drawChart);
     </script>
 
+   <script type="text/javascript">
+      google.load('visualization', '1.0', {'packages':['corechart']});   
+      google.setOnLoadCallback(drawChart);
+     
+      function drawChart() {  
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Address Completeness');
+        data.addColumn('number', 'Count');
+        data.addRows([
+          ['House number and street', 795],
+          ['House number, street, and city', 703],
+          ['House number, street, city, and state', 422],
+          ['House number, street, city, state, and post code', 376]
+        ]);
+  
+        var options = {'title':'Address Completeness',
+            colors: ['grey'],
+             'legend':'none',
+                       'width':800,
+                       'height':300};
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('address_column_chart_div'));
+        chart.draw(data, options);
+      }
+    </script> 
+
   </head>
   <body>
     <section class="page-header">
@@ -61,12 +87,12 @@
         </li>
         <p></p>
         <li><b>We are missing some building addresses here!</b>
-
-            <p></p>
             <ul>
                 <li>Check out this pie chart for buildings in Houston!</li>
                 <div id="addresses_piechart" style="width: 100%; height: 500px;"></div>
-                <li>That&#39;s a very red pie!  There are only 376 buildings with a house number, street, city, state, and postcode.  The number jumps up to 422 for buildings that are only missing the post code.  There's another jump to 703 for buildings that are only missing the post code and state.  We gain almost 100 more if we just count buildings that only have house number and street.  In many cases, these extra bits can be derived.  What does that mean?  A search engine can surrounding data to assign the city, state, and post code to a building that only has the house number and street.</li>
+                <li>That&#39;s a very red pie, but the numbers go up when we relax our criteria for "complete".</li>
+                <p></p>
+                <div id="address_column_chart_div" style="width: 800px; height: 500px;"></div>  
             </ul>
         </li>
         <p></p>
